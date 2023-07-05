@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <list>
+#include <map>
 #include <optional>
 #include <queue>
 #include <unordered_map>
@@ -40,7 +41,12 @@ private:
 
   // IP (known as Internet-layer or network-layer) address of the interface
   Address ip_address_;
-
+  size_t time = 0;                  // used to represent time. millisecond
+  std::map<uint32_t, std::pair<EthernetAddress, size_t>> arp_cache {};  // IP_address and corresponding Ethernet address and time when the mapping is recorded 
+  // map<uint32_t, EthernetAddress> arp_cache;    // used to record the mapping between IP address and Ethernet address
+  std::queue<EthernetFrame> frames_out {};
+  std::queue<std::pair<uint32_t, EthernetFrame>> waiting_mac {};  // IP address and EthernetFrame, represent those waiting for the ARP reply
+  std::map<uint32_t, size_t> timing {};       // record the time when last arp request was sent
 public:
   // Construct a network interface with given Ethernet (network-access-layer) and IP (internet-layer)
   // addresses

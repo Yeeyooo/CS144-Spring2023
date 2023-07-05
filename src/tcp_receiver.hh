@@ -6,6 +6,9 @@
 
 class TCPReceiver
 {
+private:
+  std::optional<Wrap32> ISN = std::nullopt;     // initial sequence number
+  uint64_t end_count = 0;      
 public:
   /*
    * The TCPReceiver receives TCPSenderMessages, inserting their payload into the Reassembler

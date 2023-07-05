@@ -1,11 +1,20 @@
 #pragma once
 
 #include "byte_stream.hh"
-
+#include <cmath>
+#include <map>
+#include <vector>
 #include <string>
 
 class Reassembler
 {
+private:
+  uint64_t next_expected = 0; // the index of the next byte we want, bytes before next_expected have all been
+                              // successfully received and pushed
+  uint64_t last_index = 0;    // the index of the last index in the whole byte stream
+  uint64_t cached_number = 0; // used for bytes_pending function
+  bool eof_has_come = false;  // flag used to indicate that last byte string has become
+  std::map<uint64_t, std::string> cache {}; // the first one is the index, the second one is the corresponding string
 public:
   /*
    * Insert a new substring to be reassembled into a ByteStream.
