@@ -42,7 +42,7 @@ void NetworkInterface::send_datagram( const InternetDatagram& dgram, const Addre
       arp.sender_ethernet_address = ethernet_address_;
       arp.sender_ip_address = ip_address_.ipv4_numeric();
       arp.target_ip_address = next_hop_ip;
-        // Construct Ethernet frame
+      // Construct Ethernet frame
       EthernetFrame arp_request;
       arp_request.header.src = ethernet_address_;
       arp_request.header.dst = ETHERNET_BROADCAST;

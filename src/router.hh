@@ -55,6 +55,13 @@ class Router
   // The router's collection of network interfaces
   std::vector<AsyncNetworkInterface> interfaces_ {};
 
+  struct RouterTableEntry {
+    const uint32_t route_prefix;
+    const uint8_t prefix_length;
+    const std::optional<Address> next_hop;
+    const size_t interface_num;
+  };
+  std::vector<RouterTableEntry> routing_table {};  // current routing table
 public:
   // Add an interface to the router
   // interface: an already-constructed network interface
